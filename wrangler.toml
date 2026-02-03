@@ -1,6 +1,10 @@
 name = "tauri-updater"
 compatibility_date = "2023-01-01"
 
+[vars]
+USERNAME = "unph-one"
+REPONAME = "unph.one"
+
 [[kv_namespaces]]
 binding = "KV"
 id = "6686a9b434dd41d5a83625d97d536b11"
