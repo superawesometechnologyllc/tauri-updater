@@ -1,5 +1,5 @@
-export function notFound(): Response {
-  return new Response("Not found", { status: 404 })
+export function notFound(reason :string): Response {
+  return new Response(`Not found: ${reason}`, { status: 404 })
 }
 export function noUpdateAvailable(): Response {
   return new Response(null, {

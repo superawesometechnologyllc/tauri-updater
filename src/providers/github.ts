@@ -30,19 +30,19 @@ export default async function ({
 }): Promise<Response> {
   // Make sure the platform is valid
   if (!platform || !validatePlatform(platform)) {
-    return notFound()
+    return notFound("invalid platform")
   }
 
   // Make sure our version is semver valid
   if (!version || !semver.valid(version)) {
-    return notFound()
+    return notFound("invalid version")
   }
 
   // Headers
   const release: any = await getLatestRelease(bindings, username, reponame)
 
   if (!release) {
-    return notFound()
+    return notFound("release not found")
   }
 
   console.log('found release', release)
@@ -52,7 +52,7 @@ export default async function ({
 
   // Make sure we found a valid version
   if (!remoteVersion || !semver.valid(remoteVersion)) {
-    return notFound()
+    return notFound("version not found")
   }
 
   // Check if the user is running older version or not
@@ -86,7 +86,7 @@ export default async function ({
     return json(result)
   }
 
-  return notFound()
+  return notFound("didn't find one")
 }
 
 function sanitizeVersion(version: string): string {
