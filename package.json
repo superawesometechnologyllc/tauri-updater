@@ -5,7 +5,7 @@
     "deploy": "wrangler deploy --minify src/index.ts"
   },
   "dependencies": {
-    "hono": "4.7.2",
+    "hono": "^4.7.2",
     "semver": "^7.5.4"
   },
   "devDependencies": {

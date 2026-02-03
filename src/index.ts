@@ -16,24 +16,46 @@ app.use(async (c, next) => {
   await next()
 })
 
-app.all('/github/:username/:reponame/latest', async (c) => {
+//use static repo name
+app.all("/github/latest", async (c) => {
   const param = c.req.param()
-  const release = await getLatestRelease(c.env, param.username, param.reponame)
+  const release = await getLatestRelease(c.env, c.env.USERNAME, c.env.REPONAME)
   if (!release) return c.notFound()
   return c.json(release)
 })
 
-app.get('/check/:username/:reponame/:platform/:arch/:version', (c) => {
+// app.all('/github/:username/:reponame/latest', async (c) => {
+//   const param = c.req.param()
+//   const release = await getLatestRelease(c.env, param.username, param.reponame)
+//   if (!release) return c.notFound()
+//   return c.json(release)
+// })
+
+app.get('/check/:platform/:arch/:version', (c) => {
   console.log('checking updates', c.req.url)
   const url = new URL(c.req.url)
   const params = c.req.param()
   return github({
+    username: c.env.USERNAME,
+    reponame: c.env.REPONAME,
     ...params,
     bindings: c.env,
     arch: params.arch as Arch,
     rootUrl: `${url.protocol}//${url.host}`,
   })
 })
+
+// app.get('/check/:username/:reponame/:platform/:arch/:version', (c) => {
+//   console.log('checking updates', c.req.url)
+//   const url = new URL(c.req.url)
+//   const params = c.req.param()
+//   return github({
+//     ...params,
+//     bindings: c.env,
+//     arch: params.arch as Arch,
+//     rootUrl: `${url.protocol}//${url.host}`,
+//   })
+// })
 
 app.get('/github/download-asset', (c) => {
   const asset = c.req.query('asset')
