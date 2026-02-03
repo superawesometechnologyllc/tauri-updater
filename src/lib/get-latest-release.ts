@@ -17,7 +17,8 @@ export const getLatestRelease = async (
   console.log('getting latest release', url)
   // Headers
   const headers: HeadersInit = {
-    Accept: 'application/vnd.github.preview',
+    Accept: 'application/vnd.github+json',
+    'X-GitHub-Api-Version': "2022-11-28",
     // chrome
     'user-agent': USER_AGENT,
   }
@@ -33,6 +34,8 @@ export const getLatestRelease = async (
     method: 'GET',
     headers,
   })
+
+  console.log(response)
 
   if (!response.ok) return null
 
