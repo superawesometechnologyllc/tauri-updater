@@ -25,7 +25,7 @@ export const getLatestRelease = async (
   // Add github token if provided
   const token = getGitHubToken(bindings, url)
   if (token) {
-    headers.Authorization = `token ${token}`
+    headers.Authorization = `Bearer ${token}`
   }
 
   // Get JSON from github
