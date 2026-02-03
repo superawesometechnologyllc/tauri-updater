@@ -10,7 +10,7 @@ export const getLatestRelease = async (
   const cache = await bindings.KV.get(cacheKey)
 
   if (cache) {
-    // return JSON.parse(cache)
+    return JSON.parse(cache)
   }
 
   const url = `https://api.github.com/repos/${username}/${reponame}/releases/latest`
@@ -34,6 +34,7 @@ export const getLatestRelease = async (
     method: 'GET',
     headers,
   })
+
 
   console.log(response)
 
